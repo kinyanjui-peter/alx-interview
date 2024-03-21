@@ -1,4 +1,6 @@
 #!/usr/bin/python 3
+""" finding the minimum number of oprations
+"""
 def minOperations(n):
     if n <= 1:
         return n
