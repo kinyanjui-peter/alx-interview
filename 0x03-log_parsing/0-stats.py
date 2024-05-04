@@ -3,56 +3,47 @@
 A program that check userdata for a given format and return an output
 """
 import sys
-import datetime
-import re
 
+# store the count of all status codes in a dictionary
+status_codes_dict = {'200': 0, '301': 0, '400': 0, '401': 0, '403': 0,
+                     '404': 0, '405': 0, '500': 0}
 
-def checkFormat(userInput):
-    """A fuction that check validity of userInput data"""
-    pattern1 = r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - '
-    pattern2 = r'\[\d{2}/(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)/ '
-    pattern4 = r'\d{4}\] '
-    pattern3 = r'"GET /projects/260 HTTP/1.1" \d{3} \d*$'
-    pattern = pattern1 + pattern2 + pattern4 + pattern3
-    if userInput == "":
-        return ("Please input your Data")
-    if not re.match(pattern, userInput):
-        return("wrong format")
-    return "congratulations!!! Correct format"
-    # read through stdin in the format:-
+total_size = 0
+count = 0  # keep count of the number lines counted
 
+try:
+    for line in sys.stdin:
+        line_list = line.split(" ")
 
-def print_statistics(total_file_size, status_counts):
-    """Print statistics based on the computed metrics."""
-    print(f"Total file size: {total_file_size}")
-    for status_code, count in sorted(status_counts.items()):
-        print(f"Status {status_code}: {count}")
+        if len(line_list) > 4:
+            status_code = line_list[-2]
+            file_size = int(line_list[-1])
 
+            # check if the status code receive exists in the dictionary and
+            # increment its count
+            if status_code in status_codes_dict.keys():
+                status_codes_dict[status_code] += 1
 
-def main():
-    total_file_size = 0
-    status_counts = {}
-    print("Enter your data strictly following the format")
-    print("<IP Address> - [<date>] 'GET /projects/260 HTTP/1.1'")
-    print("status code> <file size>")
+            # update total size
+            total_size += file_size
 
-    try:
-        for line in sys.stdin:
-            line = line.strip()
-            if checkFormat(line) == "Congratulations!!! Correct format":
-                parts = line.split()
-                file_size = int(parts[-1])
-                total_file_size += file_size
-                status_code = parts[-2]
-                status_counts[status_code] = \
-                    status_counts.get(status_code, 0) + 1
+            # update count of lines
+            count += 1
 
-            if len(status_counts) >= 8:
-                # All possible status codes collected
-                break
-    except KeyboardInterrupt:
-        pass
-    print_statistics(total_file_size, status_counts)
+        if count == 10:
+            count = 0  # reset count
+            print('File size: {}'.format(total_size))
 
-    if __name__ == "__main__":
-        main()
+            # print out status code counts
+            for key, value in sorted(status_codes_dict.items()):
+                if value != 0:
+                    print('{}: {}'.format(key, value))
+
+except Exception as err:
+    pass
+
+finally:
+    print('File size: {}'.format(total_size))
+    for key, value in sorted(status_codes_dict.items()):
+        if value != 0:
+            print('{}: {}'.format(key, value))
