@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Create a function def island_perimeter(grid): that returns the perimeter of the island described in grid:
+"""Create a function def island_perimeter(grid):
+`that returns the perimeter of the island described in grid:
 
 grid is a list of list of integers:
 0 represents water
@@ -10,14 +11,16 @@ grid is rectangular, with its width and height not exceeding 100
 The grid is completely surrounded by water
 
 There is only one island (or nothing).
-The island doesn’t have “lakes” (water inside that isn’t connected to the water surrounding the island).
+The island doesn’t have “lakes” (water inside that isn’t connected
+to the water surrounding the island).
 
 Args:
     grid: rectangular, with its width and height not exceeding 100
 
 Return:
-    Perimeter: 
-    """
+    Perimeter:
+"""
+
 
 def is_water(cell_value):
     """Check if a cell represents water (0).
@@ -37,12 +40,13 @@ def island_perimeter(grid):
     """
     A function that  returns the perimeter of the island described in grid
     """
-        # Get the dimensions of the grid
+    # Get the dimensions of the grid
     num_rows = len(grid)
     num_cols = len(grid[0]) if num_rows > 0 else 0  # Ensure grid has columns
 
     # Validate grid dimensions
-    assert 1 <= num_rows <= 100 and 1 <= num_cols <= 100, "Grid dimensions must be between 1 and 100"
+    assert 1 <= num_rows <= 100 and 1 <= num_cols <= 100,\
+        "Grid dimensions must be between 1 and 100"
 
     perimeter = 0
 
