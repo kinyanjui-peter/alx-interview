@@ -2,21 +2,33 @@
 """This is an interview question, lockboxes,can all boxes be opened"""
 
 
-def canUnlockAll(boxes):
-    if not boxes or not boxes[0]:
-        return False
-
-    num_boxes = len(boxes)
-    visited = [False] * num_boxes
-    visited[0] = True
-    queue = [0]
-
-    while queue:
-        current_box = queue.pop(0)
-
-        for key in boxes[current_box]:
-            if 0 <= key < num_boxes and not visited[key]:
-                visited[key] = True
-                queue.append(key)
-
-    return all(visited)
+def minOperations(n):
+    '''s calculates the least no. of calculations needed for it to
+    result to n H characters.
+    '''
+    if not isinstance(n, int):
+        return 0
+    ops_count = 0
+    clipboard = 0
+    done = 1
+    # print('H', end='')
+    while done < n:
+        if clipboard == 0:
+            # init (the first copy all and paste)
+            clipboard = done
+            done += clipboard
+            ops_count += 2
+            # print('-(11)->{}'.format('H' * done), end='')
+        elif n - done > 0 and (n - done) % done == 0:
+            # copy all and paste
+            clipboard = done
+            done += clipboard
+            ops_count += 2
+            # print('-(11)->{}'.format('H' * done), end='')
+        elif clipboard > 0:
+            # paste
+            done += clipboard
+            ops_count += 1
+            # print('-(01)->{}'.format('H' * done), end='')
+    # print('')
+    return ops_count
