@@ -3,19 +3,20 @@
 
 
 def canUnlockAll(boxes):
-    if not boxes or len(boxes) == 0:
+    if not boxes or not boxes[0]:
         return False
 
-    keys = set([0])
-    # Start with the keys to the first box (index 0)
-    unlocked = set()
-    while keys:
-        box_idx = keys.pop()
-        # Get the index of the box with the key
-        unlocked.add(box_idx)
-        # Mark the box as unlocked
-        # Add all new keys found in the opened box
-        keys.update(boxes[box_idx])
-        # Remove keys to already opened boxes
-        keys.difference_update(unlocked)
-    return len(unlocked) == len(boxes)
+    num_boxes = len(boxes)
+    visited = [False] * num_boxes
+    visited[0] = True
+    queue = [0]
+
+    while queue:
+        current_box = queue.pop(0)
+
+        for key in boxes[current_box]:
+            if 0 <= key < num_boxes and not visited[key]:
+                visited[key] = True
+                queue.append(key)
+
+    return all(visited)
