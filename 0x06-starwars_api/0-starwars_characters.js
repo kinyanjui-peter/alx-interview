@@ -1,7 +1,7 @@
 #!/usr/bin/node
 
-//interact with an external API to fetch and display information about
-//Star Wars characters based on the movie ID provided as an argument.
+//  interact with an external API to fetch and display information about
+//  Star Wars characters based on the movie ID provided as an argument.
 
 const request = require('request');
 
