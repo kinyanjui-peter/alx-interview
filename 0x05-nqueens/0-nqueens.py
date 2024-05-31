@@ -1,13 +1,15 @@
 #!/usr/bin/python3
 """N Queens placement on an NxN chessboard.
 
-This script solves the N queens problem by placing N queens on an NxN chessboard
+This script solves the N queens problem by placing N queens
+on an NxN chessboard
 such that no two queens threaten each other.
 
 Usage: nqueens N
 
 Arguments:
-    N: An integer representing the size of the chessboard and the number of queens.
+    N: An integer representing the size of the chessboard
+    and the number of queens.
 
 Constraints:
     - N must be an integer greater than or equal to 4.
